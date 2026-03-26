@@ -44,7 +44,7 @@ SELECT
     COUNT(*) AS total_trips,
     ROUND(AVG(t.fare_amount), 2) AS avg_fare,
     ROUND(AVG(t.tip_amount), 2) AS avg_tip
-FROM trips_table t
+FROM trips_table t #Replace with Table Name in hive 
 JOIN taxi_zone_lookup z
 ON t.PULocationID = z.LocationID
 GROUP BY z.Borough;
