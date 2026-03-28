@@ -75,7 +75,8 @@ FROM nyctaxi_external_rawdataset;
 ```
 ### SQL Scripts
 <p align="justify">
-All SQL scripts related to Hive table creation, data transformation, and query execution are available in the [`sql/`](./sql/) folder of this repository.
+All SQL scripts related to Hive table creation, data transformation, and query execution are available in the 
+<a href="./sql/">sql folder</a> of this repository.
 </p>
 
 ## Example Query (External Textfile)
