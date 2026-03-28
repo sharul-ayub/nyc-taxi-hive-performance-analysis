@@ -60,3 +60,11 @@ ORDER BY total_trips DESC;
 <p align="justify">
 Across every table configuration, Parquet uses much less storage and runs faster than Textfile. For example, in the external table, switching from textfile (353.28 MB, 86.52 s) to Parquet (116.77 MB, 81.78 s) reduces storage by 236.51 MB and improves execution time by 4.74 s. The same trend appears for partitioned tables where partitioned textfile (286.99 MB, 65.85 s) versus partitioned Parquet (65.37 MB, 62.96 s) shows a storage reduction of 221.62 MB and faster execution by 2.89 s.
 </p>
+
+## 👤 Author
+
+<p>
+  <b>Mohamad Sharul Bin Mohamad Ayub</b><br>
+  MSc Data Science, Universiti Teknologi MARA (UiTM)<br>
+  🔗 <a href="https://linkedin.com/in/sharulayub">LinkedIn</a>
+</p>
