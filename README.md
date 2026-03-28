@@ -23,6 +23,61 @@ To analyze how Hive table design affects query performance, comparing:
   <img src="images/Workflow.png" alt="Workflow" width="500"/>
 </p>
 
+## Dataset Schema Inspection
+
+Before creating Hive tables, the dataset schema was inspected to understand its structure, data types, and potential compatibility issues.
+
+**Retrieve Dataset from HDFS**
+
+Update the HDFS path based on your environment 
+
+```bash
+hdfs dfs -get /user/student5/project_assignment/Dataset/yellow_tripdata_2025_01.parquet
+ls
+```
+This step retrieves the dataset from HDFS to the local environment and verifies that the file has been successfully downloaded.
+```bash
+parquet-tools schema yellow_tripdata_2025_01.parquet
+```
+<p align="center">
+  <img src="images/schema_inspection_output.png" alt="schema inspection output" width="500"/>
+</p>
+
+<p align="justify">
+The fields tpep_pickup_datetime and tpep_dropoff_datetime are stored in microsecond precision. The Hive version used does not support microsecond-level timestamps. Therefore, these fields were converted to a compatible format to ensure proper processing in Hive.  
+</p>
+
+## Timestamp Conversion (Microseconds → TIMESTAMP)
+
+The original dataset stores `tpep_pickup_datetime` and `tpep_dropoff_datetime` in **microsecond precision**, which is not supported by the Hive version used.
+
+To handle this, a two-step conversion process was applied:
+
+#### Step 1: Store raw timestamps as BIGINT
+
+```sql
+CREATE EXTERNAL TABLE nyctaxi_external_rawdataset (
+    tpep_pickup_datetime BIGINT,
+    tpep_dropoff_datetime BIGINT,
+    ...
+)
+STORED AS PARQUET
+LOCATION '{hdfs_dataset_path}';
+```
+#### Step 2: Convert BIGINT → TIMESTAMP during data insertion
+```sql
+INSERT INTO nyctaxi_external_parquet
+SELECT
+    from_unixtime(CAST(tpep_pickup_datetime / 1000000 AS BIGINT)) AS pickup_datetime,
+    from_unixtime(CAST(tpep_dropoff_datetime / 1000000 AS BIGINT)) AS dropoff_datetime,
+    ...
+FROM nyctaxi_external_rawdataset;
+```
+### SQL Scripts
+<p align="justify">
+All SQL scripts related to Hive table creation, data transformation, and query execution are available in the [`sql/`](./sql/) folder of this repository.
+</p>
+
 ## Example Query (External Textfile)
 
 ```sql
