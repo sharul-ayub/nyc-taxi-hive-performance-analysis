@@ -22,7 +22,8 @@ To analyze how Hive table design affects query performance, comparing:
 <p align="center">
   <img src="images/Workflow.png" alt="Workflow" width="500"/>
 </p>
-### Example Query (External Textfile)
+
+## Example Query (External Textfile)
 
 ```sql
 SELECT
