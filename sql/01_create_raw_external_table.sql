@@ -10,8 +10,9 @@
 -- to ensure compatibility.
 
 -- IMPORTANT:
--- Update the LOCATION path based on your HDFS directory
--- Example: /user/student5/project_assignment/Dataset
+-- Update the LOCATION path, {hdfs_dataset_path} based on your HDFS directory
+-- Example: 
+-- LOCATION '/user/student5/project_assignment/Dataset';
 
 
 CREATE EXTERNAL TABLE nyctaxi_external_rawdataset (
