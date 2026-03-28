@@ -13,9 +13,9 @@ To analyze how Hive table design affects query performance, comparing:
 - Partitioned + Bucketed tables
 
 ##  Dataset
-- **Primary dataset**: [NYC Taxi Trip Data (Jan 2025)](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet)  
+- **Primary dataset**: [NYC Taxi Trip Data (Jan 2025)](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page#:~:text=January-,Yellow%20Taxi%20Trip%20Records%20(PARQUET),-Green%20Taxi%20Trip)  
 - **Size**: ~3.4 million rows
-- **Secondary dataset**: [Taxi Zone Lookup Table](https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv)  
+- **Secondary dataset**: [Taxi Zone Lookup Table](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page#:~:text=Taxi%20Zone%20Lookup%20Table%20(CSV))  
 
 
 ## Project Workflow
