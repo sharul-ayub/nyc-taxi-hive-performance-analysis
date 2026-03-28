@@ -1,3 +1,19 @@
+-- ==============================
+-- Raw External Table (NYC Taxi Dataset)
+-- ==============================
+
+-- Description:
+-- Timestamp fields (tpep_pickup_datetime, tpep_dropoff_datetime)
+-- are stored as BIGINT because the original data uses microsecond precision.
+-- The Hive version used does not support microsecond-level timestamps,
+-- so values are stored as BIGINT and will be converted to TIMESTAMP later
+-- to ensure compatibility.
+
+-- IMPORTANT:
+-- Update the LOCATION path based on your HDFS directory
+-- Example: /user/student5/project_assignment/Dataset
+
+
 CREATE EXTERNAL TABLE nyctaxi_external_rawdataset (
     VendorID INT,
     tpep_pickup_datetime BIGINT,
@@ -21,17 +37,4 @@ CREATE EXTERNAL TABLE nyctaxi_external_rawdataset (
     cbd_congestion_fee DOUBLE
 )
 STORED AS PARQUET
-LOCATION '/user/student5/project_assignment/Dataset';
-
-
-
----
-
-### ✔ Option 3 (Best for portfolio 🔥)
-
-Make it configurable:
-
-```sql
--- Replace with your HDFS dataset path
--- Example: /user/your_username/project_assignment/Dataset
-LOCATION '${hdfs_dataset_path}';
+LOCATION '{hdfs_dataset_path}';
