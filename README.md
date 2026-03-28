@@ -1,8 +1,8 @@
-# 🚖 NYC Taxi Hive Performance Analysis
+#  NYC Taxi Hive Performance Analysis
 
-This project evaluates Apache Hive query performance across different table configurations using the NYC Yellow Taxi January 2025 dataset.
+This project evaluates the performance of different Hive table configurations using the Hadoop ecosystem. The goal is to analyze how storage format, table type, partitioning, and bucketing impact query execution time and storage efficiency by using the NYC Yellow Taxi January 2025 dataset.
 
-## 📌 Objective
+##  Objective
 To analyze how Hive table design affects query performance, comparing:
 
 - External vs Internal tables
@@ -11,19 +11,13 @@ To analyze how Hive table design affects query performance, comparing:
 - Bucketed tables
 - Partitioned + Bucketed tables
 
-## 🛠️ Technologies Used
-- Hadoop (HDFS, YARN)
-- Apache Hive
-- Hue Interface
-- Parquet
-- Textfile
+##  Dataset
+- **Primary dataset**: [NYC Taxi Trip Data (Jan 2025)](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet)  
+- **Size**: ~3.4 million rows
+- **Secondary dataset**: [Taxi Zone Lookup Table](https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv)  
 
-## 📊 Dataset
-- NYC Yellow Taxi Trip Records (January 2025)
-- Taxi Zone Lookup Table
-- ~3.4 million records in main dataset
 
-## 🔄 Workflow
+## Project Workflow
 1. Upload dataset to HDFS
 2. Inspect schema using Hive
 3. Convert timestamp fields for Hive compatibility
@@ -37,14 +31,20 @@ To analyze how Hive table design affects query performance, comparing:
 6. Execute same query across all tables
 7. Compare performance (runtime & storage)
 
-## 🧪 Key Query (Benchmark)
+### Example Query (External Textfile)
+
 ```sql
-SELECT 
-    z.Borough,
+SELECT
+    z.Borough AS borough,
     COUNT(*) AS total_trips,
-    ROUND(AVG(t.fare_amount), 2) AS avg_fare,
-    ROUND(AVG(t.tip_amount), 2) AS avg_tip
-FROM trips_table t #Replace with Table Name in hive 
-JOIN taxi_zone_lookup z
-ON t.PULocationID = z.LocationID
-GROUP BY z.Borough;
+    ROUND(AVG(t.total_amount), 2) AS avg_fare,
+    CAST(COALESCE(SUM(t.total_amount), 0) AS DECIMAL(15,2)) AS total_fare
+FROM nyctaxi_external_textfile t
+JOIN nyctaxi_zone z
+    ON t.PULocationID = z.LocationID
+WHERE to_date(t.pickup_datetime)
+      BETWEEN '2025-01-01' AND '2025-01-07'
+GROUP BY z.Borough
+ORDER BY total_trips DESC;
+```
+
