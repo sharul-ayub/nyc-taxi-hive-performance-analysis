@@ -1,4 +1,4 @@
-#  NYC Taxi Hive Performance Analysis
+#  Big Data Query Performance Analysis Using Hive (NYC Taxi Dataset)
 <p align="justify">
 This project evaluates the performance of different Hive table configurations using the Hadoop ecosystem. The goal is to analyze how storage format, table type, partitioning, and bucketing impact query execution time and storage efficiency by using the NYC Yellow Taxi January 2025 dataset.   
 </p>
